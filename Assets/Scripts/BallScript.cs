@@ -7,13 +7,13 @@ public class BallScript : MonoBehaviour
     public GameManager manager;
 
     [SerializeField]
-    Rigidbody rb = null;
+    Rigidbody2D rb = null;
 
     public void SetDirection(Vector3 dir)
     {
         float speed = Random.Range(1,2);
         var direction = dir - transform.position / 3;
-        rb.AddForce(direction * speed, ForceMode.Impulse);
+        rb.AddForce(direction * speed);
     }
 
     private void OnTriggerEnter(Collider col)
