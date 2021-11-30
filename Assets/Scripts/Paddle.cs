@@ -11,6 +11,7 @@ public class Paddle : MonoBehaviour
 
     Rigidbody rb = null;
     public BallScript ball;
+    float clampMin = -4.55f, clampMax = 4.55f;
 
     // Start is called before the first frame update
     void Start()
@@ -37,25 +38,30 @@ public class Paddle : MonoBehaviour
     {
         float vertical = Input.GetAxis("Vertical");
         gameObject.transform.position += vertical * Vector3.up * Time.deltaTime * speed;
+        float y = transform.position.y;
+        gameObject.transform.position = new Vector3(transform.position.x, Mathf.Clamp(y, clampMin, clampMax), 0); ;
+
     }
 
     void P2Input()
     {
         float vertical = Input.GetAxis("Vertical2");
-        print(vertical);
         gameObject.transform.position += vertical * Vector3.up * Time.deltaTime * speed;
+        float y = transform.position.y;
+        gameObject.transform.position = new Vector3(transform.position.x, Mathf.Clamp(y, clampMin, clampMax), 0);
     }
-    private void OnCollisionExit(Collision collision)
+    private void OnCollisionExit2D(Collision2D collision)
     {
+        print("HIT");
         if (collision.gameObject.name.Contains("Ball"))
         {
             switch (myPlayer)
             {
                 case player.P1:
-                    ball.GetComponent<Rigidbody>().AddForce(0.5f * Vector3.right, ForceMode.Impulse);
+                    ball.GetComponent<Rigidbody2D>().AddForce(0.5f * Vector3.right, ForceMode2D.Impulse);
                     break;
                 case player.P2:
-                    ball.GetComponent<Rigidbody>().AddForce(-0.5f * Vector3.right, ForceMode.Impulse);
+                    ball.GetComponent<Rigidbody2D>().AddForce(-0.5f * Vector3.right, ForceMode2D.Impulse);
                     break;
             }
         }

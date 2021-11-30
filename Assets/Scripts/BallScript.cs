@@ -8,15 +8,17 @@ public class BallScript : MonoBehaviour
 
     [SerializeField]
     Rigidbody2D rb = null;
+    [SerializeField]
+    float speed = 10;
 
     public void SetDirection(Vector3 dir)
     {
-        float speed = Random.Range(1,2);
-        var direction = dir - transform.position / 3;
-        rb.AddForce(direction * speed);
+        //float speedVar = Random.Range(1,5);
+        var direction = dir - transform.position;
+        rb.AddForce(direction * speed, ForceMode2D.Impulse);
     }
 
-    private void OnTriggerEnter(Collider col)
+    private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.name.Contains("Goal"))
         {
